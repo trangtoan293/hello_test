@@ -1,0 +1,66 @@
+create table if not exists integration.lsat_der_customer_account_qtd (
+    dv_hkey_lsat_customer_account_qtd string,
+    dv_hkey_lnk_customer_account string,
+    dv_hsh_dif string,
+    tm_sr_key int,
+    qtd_actv_depst_act_flag int,
+    qtd_ldgr_bal_amt_in_lc float,
+    qtd_ldgr_bal_amt_in_tc float,
+    qtd_avg_intrst_amt_in_tc float,
+    qtd_avg_ldgr_bal_amt_in_lc float,
+    qtd_avg_ldgr_bal_amt_in_tc float,
+    qtd_intrst_accr_amt_in_lc float,
+    qtd_intrst_pd_amt_in_lc float,
+    qtd_intrst_pd_amt_in_tc float,
+    qtd_debt_brnch_trns_amt_in_lc float,
+    qtd_debt_brnch_trns_amt_in_tc float,
+    qtd_debt_oth_trns_amt_in_lc float,
+    qtd_debt_oth_trns_amt_in_tc float,
+    qtd_crdt_brnch_trns_amt_in_lc float,
+    qtd_crdt_brnch_trns_amt_in_tc float,
+    qtd_crdt_oth_trns_amt_in_lc float,
+    qtd_crdt_oth_trns_amt_in_tc float,
+    qtd_nbr_debt_brnch_trns int,
+    qtd_nbr_debt_oth_trns int,
+    qtd_nbr_crdt_brnch_trns int,
+    qtd_nbr_crdt_oth_trns int,
+    qtd_nii_amt_in_lc float,
+    qtd_nii_amt_in_tc float,
+    qtd_fund_cst_amt_in_lc float,
+    qtd_fund_cst_amt_in_tc float,
+    qtd_fee_incm_amt_in_lc float,
+    qtd_fee_incm_amt_in_tc float,
+    qtd_depst_statry_rsrv_in_lc float,
+    qtd_depst_statry_rsrv_in_tc float,
+    qtd_insrnce_prmum_amt_in_lc float,
+    qtd_insrnce_prmum_amt_in_tc float,
+    qtd_od_intrst_accr_amt_in_lc float,
+    qtd_od_intrst_accr_amt_in_tc float,
+    qtd_avg_intrst_rte float,
+    qtd_ftp_amt_in_lc float,
+    qtd_ftp_amt_in_tc float,
+    qtd_ldgrbal_act_opng_tdy_in_lc float,
+    qtd_ldgrbal_act_opng_tdy_in_tc float,
+    qtd_trmday_ostd_bal_amt_in_lc float,
+    qtd_trmday_new_ostd_bal_amt_in_lc float,
+    qtd_pnlty_intrst_amt_in_lc float,
+    qtd_pnlty_intrst_amt_in_tc float,
+    dv_kaf_ldt timestamp,
+    dv_kaf_ofs bigint,
+    dv_cdc_ops string,
+    dv_src_ldt timestamp,
+    dv_src_rec string,
+    dv_ldt timestamp
+)
+using iceberg
+tblproperties ('write.merge.mode' = 'merge-on-read'
+        , 'write.delete.mode' = 'merge-on-read'
+        , 'write.update.mode' = 'merge-on-read'
+        , 'hive.engine.enabled' = 'true'
+        , 'write.distribution-mode' = 'hash'
+        , 'write.target-file-size-bytes' = '536870912'
+        , 'read.parquet.vectorization.enabled' = 'true'
+        , 'read.parquet.vectorization.batch-size' = '10000'
+        )
+partitioned by (days(dv_src_ldt))
+;

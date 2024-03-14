@@ -1,0 +1,74 @@
+create table if not exists integration.sat_der_account (
+    dv_hkey_sat_account string,
+    dv_hkey_hub_account string,
+    dv_hsh_dif string,
+    depst_act_nbr float,
+    depst_cnvrtd_act_nbr string,
+    prd_sr_key int,
+    brnch_sr_key int,
+    depst_act_sts_sr_key int,
+    trm_typ_sr_key int,
+    emp_sr_key int,
+    gl_grp_sr_key int,
+    depst_prog_prd_sr_key int,
+    trns_cur_cd string,
+    lcl_cur_cd string,
+    offcr_cd string,
+    depst_act_open_dt timestamp,
+    depst_act_clsd_dt timestamp,
+    mture_dt timestamp,
+    last_rdmptn_dt timestamp,
+    last_rnwl_dt timestamp,
+    sts_chng_dt timestamp,
+    last_depst_dt timestamp,
+    gl_grp_cd string,
+    od_fac_flag int,
+    ermrk_flag int,
+    intrst_rte float,
+    intrst_accr_mthd_ind string,
+    rnwl_cntr int,
+    auto_rnwl_ind string,
+    tm_depst_fund_src_ind string,
+    tm_depst_trm_mth float,
+    cmtmnt_fee_eff_dt timestamp,
+    act_typ_cd string,
+    mony_src_sr_key int,
+    acct_purp_sr_key int,
+    cus_cif_nbr string,
+    erly_wdl_dt timestamp,
+    frst_mture_dt timestamp,
+    nbr_of_sav_bk string,
+    eff_strt_dt timestamp,
+    eff_end_dt timestamp,
+    cob_dt timestamp,
+    src_sys_cd string,
+    updtd_by string,
+    updtd_dtm timestamp,
+    sal_flag int,
+    prd_pkg_sr_key int,
+    freq_intrst_pmt float,
+    intrst_pmt_mthd_sr_key int,
+    vcrm_dept_sr_key int,
+    vcrm_offcr_cd string,
+    freq_intrst_pmt_core string,
+    auto_pay_od_flg int,
+    usr_crea string,
+    chnl_id string,
+    dv_kaf_ldt timestamp,
+    dv_kaf_ofs bigint,
+    dv_cdc_ops string,
+    dv_src_ldt timestamp,
+    dv_src_rec string,
+    dv_ldt timestamp
+)
+using iceberg
+tblproperties ('write.merge.mode' = 'merge-on-read'
+        , 'write.delete.mode' = 'merge-on-read'
+        , 'write.update.mode' = 'merge-on-read'
+        , 'hive.engine.enabled' = 'true'
+        , 'write.distribution-mode' = 'hash'
+        , 'write.target-file-size-bytes' = '536870912'
+        , 'read.parquet.vectorization.enabled' = 'true'
+        , 'read.parquet.vectorization.batch-size' = '10000'
+        )
+partitioned by (days(dv_src_ldt))

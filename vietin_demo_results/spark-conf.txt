@@ -1,0 +1,24 @@
+--jars <path>
+--conf spark.sql.parquet.datetimeRebaseModeInRead=CORRECTED \
+--conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
+--conf spark.kryoserializer.buffer.max=128m \
+--conf spark.sql.files.maxPartitionBytes=64mb \
+--conf spark.dynamicAllocation.enabled=true \
+--conf spark.dynamicAllocation.minExecutors=3 \
+--conf spark.dynamicAllocation.maxExecutors=9 \
+--conf spark.locality.wait=1s \
+--conf spark.executor.cores=4 \
+--conf spark.executor.memory=3g \
+--conf spark.driver.memory=8g \
+--conf spark.dynamicAllocation.executorIdleTimeout=10s \
+--conf spark.sql.codegen.wholeStage=false \
+--conf spark.sql.shuffle.partitions=700 \
+--conf spark.sql.adaptive.enabled=true \
+--conf spark.sql.optimizer.dynamicPartitionPruning.enabled=true \
+--conf spark.sql.autoBroadcastJoinThreshold=104857600 \
+--conf spark.shuffle.spill.compress=true \
+--conf spark.shuffle.compress=true \
+--conf spark.broadcast.compress=true \
+--conf spark.sql.oap.parquet.binary.cache.enabled=true \
+--conf spark.kryo.registrationRequired=false \
+

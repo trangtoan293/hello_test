@@ -1,0 +1,69 @@
+create table if not exists integration.lsat_der_customer_account_dly (
+    dv_hkey_lsat_customer_account_dly string,
+    dv_hkey_lnk_customer_account string,
+    dv_hsh_dif string,
+    tm_sr_key int,
+    dly_actv_depst_act_flag int,
+    dly_ldgr_bal_amt_in_lc float,
+    dly_ldgr_bal_amt_in_tc float,
+    dly_intrst_accr_amt_in_lc float,
+    dly_intrst_pd_amt_in_lc float,
+    dly_intrst_pd_amt_in_tc float,
+    dly_debt_brnch_trns_amt_in_lc float,
+    dly_debt_brnch_trns_amt_in_tc float,
+    dly_debt_oth_trns_amt_in_lc float,
+    dly_debt_oth_trns_amt_in_tc float,
+    dly_crdt_brnch_trns_amt_in_lc float,
+    dly_crdt_brnch_trns_amt_in_tc float,
+    dly_crdt_oth_trns_amt_in_lc float,
+    dly_crdt_oth_trns_amt_in_tc float,
+    dly_nbr_debt_brnch_trns int,
+    dly_nbr_debt_oth_trns int,
+    dly_nbr_crdt_brnch_trns int,
+    dly_nbr_crdt_oth_trns int,
+    dly_nii_amt_in_lc float,
+    dly_nii_amt_in_tc float,
+    dly_fund_cst_amt_in_lc float,
+    dly_fund_cst_amt_in_tc float,
+    dly_fee_incm_amt_in_lc float,
+    dly_fee_incm_amt_in_tc float,
+    dly_net_intrst_mrgn_pct float,
+    dly_depst_statry_rsrv_in_lc float,
+    dly_depst_statry_rsrv_in_tc float,
+    dly_insrnce_prmum_amt_in_lc float,
+    dly_insrnce_prmum_amt_in_tc float,
+    dly_avg_intrst_amt_in_lc float,
+    dly_avg_intrst_amt_in_tc float,
+    dly_od_intrst_accr_amt_in_lc float,
+    dly_od_intrst_accr_amt_in_tc float,
+    dly_ftp_amt_in_lc float,
+    dly_ftp_amt_in_tc float,
+    dly_acum_sav_lte_depst_amt_in_lc float,
+    dly_acum_sav_lte_depst_amt_in_tc float,
+    dly_ldgrbal_act_opng_tdy_in_lc float,
+    dly_ldgrbal_act_opng_tdy_in_tc float,
+    dly_ldgr_bal_1m_6mth_in_lc float,
+    dly_ldgr_bal_1m_6mth_in_tc float,
+    dly_trmday_ostd_bal_amt_in_lc float,
+    dly_trmday_new_ostd_bal_amt_in_lc float,
+    dly_pnlty_intrst_amt_in_lc float,
+    dly_pnlty_intrst_amt_in_tc float,
+    dv_kaf_ldt timestamp,
+    dv_kaf_ofs bigint,
+    dv_cdc_ops string,
+    dv_src_ldt timestamp,
+    dv_src_rec string,
+    dv_ldt timestamp
+)
+using iceberg
+tblproperties ('write.merge.mode' = 'merge-on-read'
+        , 'write.delete.mode' = 'merge-on-read'
+        , 'write.update.mode' = 'merge-on-read'
+        , 'hive.engine.enabled' = 'true'
+        , 'write.distribution-mode' = 'hash'
+        , 'write.target-file-size-bytes' = '536870912'
+        , 'read.parquet.vectorization.enabled' = 'true'
+        , 'read.parquet.vectorization.batch-size' = '10000'
+        )
+partitioned by (days(dv_src_ldt))
+;
